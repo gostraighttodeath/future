@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>암산 O/X 연습 - 세로 계산</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #problem { font-size: 24px; margin: 20px; font-family: monospace; white-space: pre; }
+        #result { margin-top: 10px; font-size: 20px; }
+    </style>
+</head>
+<body>
+
+<h1>🧮 암산 O/X 연습 (세로 계산)</h1>
+<p>제시된 정답이 맞는지 O 또는 X를 눌러 확인하세요!</p>
+
+<div id="problem"></div>
+<p id="givenAnswer"></p>
+
+<button onclick="checkAnswer(true)">⭕ 맞아요</button>
+<button onclick="checkAnswer(false)">❌ 틀려요</button>
+<p id="result"></p>
+<button onclick="generateProblem()">새 문제</button>
+
+<script>
+    let num1, num2, num3, operator1, operator2, correctAnswer, displayedAnswer;
+
+    function generateProblem() {
+        // 1~9999까지의 숫자 랜덤 생성 (1~4자리 가능)
+        num1 = Math.floor(Math.random() * 9999) + 1;
+        num2 = Math.floor(Math.random() * 9999) + 1;
+        num3 = Math.floor(Math.random() * 9999) + 1;
+
+        operator1 = Math.random() > 0.5 ? '+' : '-';
+        operator2 = Math.random() > 0.5 ? '+' : '-';
+
+        // 실제 정답 계산
+        correctAnswer = eval(`${num1} ${operator1} ${num2} ${operator2} ${num3}`);
+
+        // 51% 확률로 맞는 답, 49% 확률로 틀린 답 제공
+        displayedAnswer = Math.random() > 0.49 ? correctAnswer : correctAnswer + Math.floor(Math.random() * 20) - 10;
+
+        // 자리 맞춰 세로 정렬을 위한 문자열 변환
+        let longestLength = Math.max(num1.toString().length, num2.toString().length, num3.toString().length);
+        let formattedNum1 = num1.toString().padStart(longestLength, ' ');
+        let formattedNum2 = `${operator1} ${num2.toString().padStart(longestLength - 2, ' ')}`;
+        let formattedNum3 = `${operator2} ${num3.toString().padStart(longestLength - 2, ' ')}`;
+        let line = '-'.repeat(longestLength);
+
+        document.getElementById("problem").innerText = `${formattedNum1}\n${formattedNum2}\n${formattedNum3}\n${line}`;
+        document.getElementById("givenAnswer").innerText = `제시된 정답: ${displayedAnswer}`;
+        document.getElementById("result").innerText = "";
+    }
+
+    function checkAnswer(isCorrect) {
+        let actualCorrectness = (displayedAnswer === correctAnswer);
+        if (isCorrect === actualCorrectness) {
+            document.getElementById("result").innerText = "✅ 정답입니다!";
+        } else {
+            document.getElementById("result").innerText = "❌ 틀렸어요. 다시 시도해보세요!";
+        }
+    }
+
+    generateProblem();
+</script>
+
+</body>
+
+<link rel="manifest" href="manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker 등록 완료!"))
+      .catch((error) => console.log("Service Worker 등록 실패:", error));
+  }
+</script>
+
+</html>
