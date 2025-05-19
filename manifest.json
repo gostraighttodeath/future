@@ -1,7 +1,7 @@
 {
   "name": "암산 프로그램",
   "short_name": "암산",
-  "start_url": "암산.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",

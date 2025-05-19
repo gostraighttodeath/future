@@ -1,7 +1,7 @@
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("암산-cache").then((cache) => {
-      return cache.addAll(["암산.html", "style.css", "script.js"]);
+    caches.open("index-cache").then((cache) => {
+      return cache.addAll(["index.html", "style.css", "script.js"]);
     })
   );
 });
